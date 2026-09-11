@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тайны Океана — Приглашение</title>
+    <link rel="stylesheet" href="Welcome.css">
+    <!-- Подключаем красивый шрифт -->
+    <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Задний фон с эффектом мерцания бездны -->
+    <div class="ocean-bg"></div>
+
+    <div class="container">
+        <!-- Блок с первоначальным вопросом -->
+        <div id="question-block" class="fade-in">
+            <h1>Хочешь узнать, какие тайны скрывает океан?</h1>
+            <button id="yes-btn" class="btn">Да, хочу</button>
+        </div>
+
+        <!-- Блок со ссылкой-приглашением, который изначально скрыт -->
+        <div id="invite-block" class="hidden">
+            <h2>Тогда добро пожаловать на борт. Погружаемся...</h2>
+            <!-- Замените "main.html" на название файла вашей будущей главной страницы -->
+            <a href="main.html" class="explore-link">Начать погружение 🌊</a>
+        </div>
+    </div>
+
+    <script>
+        // Находим элементы на странице
+        const yesBtn = document.getElementById('yes-btn');
+        const questionBlock = document.getElementById('question-block');
+        const inviteBlock = document.getElementById('invite-block');
+
+        // Слушаем клик по кнопке "Да, хочу"
+        yesBtn.addEventListener('click', () => {
+            // 1. Плавно скрываем блок с вопросом
+            questionBlock.classList.add('fade-out');
+            
+            // 2. Ждем, пока закончится анимация исчезновения (500мс)
+            setTimeout(() => {
+                questionBlock.style.display = 'none'; // Полностью убираем вопрос
+                
+                // 3. Показываем блок с приглашением и запускаем анимацию его появления
+                inviteBlock.classList.remove('hidden');
+                inviteBlock.classList.add('slide-up');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

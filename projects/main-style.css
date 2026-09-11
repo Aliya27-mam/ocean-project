@@ -1,0 +1,615 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    background-color: #02050a;
+}
+
+/* Фиксированная шапка сайта */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: rgba(2, 5, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #5bc0be;
+}
+
+/* Находим сам контейнер меню и делаем его гибкой строкой */
+.navbar nav {
+    display: flex;
+    align-items: center;
+    /* Выравнивает слова и кнопку строго по центру по вертикали */
+}
+
+/* Стили для ссылок-слов */
+.navbar nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 1rem;
+    transition: color 0.3s;
+    display: inline-block;
+    /* Чтобы ссылки не сжимались */
+}
+
+.navbar nav a:hover {
+    color: #5bc0be;
+}
+
+/* Изменяем отступ у круглой кнопки звука */
+.sound-icon-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 40px;
+    /* Чуть-чуть уменьшим диаметр, чтобы точно влезла */
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 25px;
+    /* Отступ слева от последнего слова */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+    /* Запрещаем кнопке сжиматься и деформироваться */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Общие стили для океанских зон */
+.ocean-zone {
+    min-height: 100vh;
+    padding: 120px 50px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.zone-info {
+    text-align: center;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+
+.depth-tag {
+    display: inline-block;
+    background: rgba(91, 192, 190, 0.2);
+    color: #5bc0be;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.zone-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.zone-info p {
+    font-weight: 300;
+    color: #cfd8dc;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Фоны зон */
+.zone-surface {
+    background: linear-gradient(to bottom, #0077b6, #0096c7, #03045e);
+}
+
+.zone-twilight {
+    background: linear-gradient(to bottom, #03045e, #02022d, #010214);
+}
+
+.zone-midnight {
+    background: linear-gradient(to bottom, #010214, #000105, #000000);
+}
+
+/* Сетка карточек */
+.cards-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* === КАРТОЧКА ЖИВОТНОГО === */
+.animal-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    width: 320px;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    /* Скрывает кнопку, пока она внизу */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Новые контейнеры для картинок */
+.card-image-box {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Чтобы фото красиво заполняло блок */
+    transition: transform 0.5s ease;
+}
+
+.animal-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #5bc0be;
+}
+
+.animal-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b0bec5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    /* Чтобы текст выравнивал карточки */
+}
+
+.status-safe,
+.status-danger {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 5px;
+    align-self: flex-start;
+    margin-bottom: 10px;
+    transition: opacity 0.3s;
+}
+
+.status-safe {
+    background: rgba(76, 175, 80, 0.2);
+    color: #81c784;
+}
+
+.status-danger {
+    background: rgba(244, 67, 54, 0.2);
+    color: #e57373;
+}
+
+/* === ЭФФЕКТЫ ПРИ НАВЕДЕНИИ НА КАРТОЧКУ === */
+.animal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(91, 192, 190, 0.25);
+    border-color: rgba(91, 192, 190, 0.5);
+}
+
+/* Приближение картинки при наведении на карточку */
+.animal-card:hover .card-image-box img {
+    transform: scale(1.1);
+}
+
+/* === АНИМАЦИОННАЯ КНОПКА "УЗНАТЬ БОЛЬШЕ" === */
+.more-btn {
+    background-color: #5bc0be;
+    color: #02050a;
+    border: none;
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+
+    /* Начальное скрытое состояние кнопочки (смещена вниз и прозрачная) */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Выплывание кнопки при наведении на саму карточку */
+.animal-card:hover .more-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Скрываем плашки статусов при выплывании кнопки, чтобы не загромождать место */
+.animal-card:hover .status-safe,
+.animal-card:hover .status-danger {
+    opacity: 0;
+}
+
+/* Анимация перекрашивания самой кнопки при наведении уже на неё */
+.more-btn:hover {
+    background-color: #ffffff;
+    /* Плавно становится белой (более светлой) */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+
+/* === УЛЬТРАСОВРЕМЕННАЯ КНОПКА ЗВУКА === */
+.sound-icon-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    /* Идеально круглая форма */
+    cursor: pointer;
+    margin-left: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Контейнер для звуковых дорожек */
+.sound-wave {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 18px;
+    height: 16px;
+}
+
+/* Стили для каждой палочки эквалайзера */
+.sound-wave .bar {
+    width: 3px;
+    height: 100%;
+    background-color: #cfd8dc;
+    /* В выключенном состоянии — нейтральный серый */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Изначально, когда звук выключен, палочки статичны и опущены */
+.sound-wave .bar.stroke-1 {
+    height: 30%;
+}
+
+.sound-wave .bar.stroke-2 {
+    height: 45%;
+}
+
+.sound-wave .bar.stroke-3 {
+    height: 60%;
+}
+
+.sound-wave .bar.stroke-4 {
+    height: 35%;
+}
+
+/* Эффект при наведении на круглую кнопку */
+.sound-icon-btn:hover {
+    border-color: #5bc0be;
+    background: rgba(91, 192, 190, 0.05);
+    box-shadow: 0 0 15px rgba(91, 192, 190, 0.2);
+    transform: scale(1.05);
+}
+
+.sound-icon-btn:hover .bar {
+    background-color: #5bc0be;
+    /* Палочки подсвечиваются бирюзовым */
+}
+
+/* === КОГДА ЗВУК ВКЛЮЧЕН (Активное состояние) === */
+.sound-icon-btn.sound-active {
+    background: rgba(91, 192, 190, 0.15);
+    border-color: #5bc0be;
+    box-shadow: 0 0 20px rgba(91, 192, 190, 0.4);
+}
+
+/* Окрашиваем палочки в яркий неоновый цвет */
+.sound-icon-btn.sound-active .bar {
+    background-color: #5bc0be;
+}
+
+/* Запуск индивидуальных анимаций для создания эффекта живого звука */
+.sound-icon-btn.sound-active .stroke-1 {
+    animation: dance-1 0.6s ease-in-out infinite alternate;
+}
+
+.sound-icon-btn.sound-active .stroke-2 {
+    animation: dance-2 0.7s ease-in-out infinite alternate;
+}
+
+.sound-icon-btn.sound-active .stroke-3 {
+    animation: dance-3 0.5s ease-in-out infinite alternate;
+}
+
+.sound-icon-btn.sound-active .stroke-4 {
+    animation: dance-4 0.8s ease-in-out infinite alternate;
+}
+
+/* Анимации прыгающих дорожек (каждая прыгает на свою высоту и со своей скоростью) */
+@keyframes dance-1 {
+    0% {
+        height: 30%;
+    }
+
+    100% {
+        height: 85%;
+    }
+}
+
+@keyframes dance-2 {
+    0% {
+        height: 45%;
+    }
+
+    100% {
+        height: 100%;
+    }
+}
+
+@keyframes dance-3 {
+    0% {
+        height: 60%;
+    }
+
+    100% {
+        height: 35%;
+    }
+}
+
+@keyframes dance-4 {
+    0% {
+        height: 35%;
+    }
+
+    100% {
+        height: 90%;
+    }
+}
+
+/* === АНИМАЦИЯ ВССПЛЫВАЮЩИХ ПУЗЫРЕЙ === */
+
+/* Контейнер для пузырей растягивается на весь экран и фиксируется */
+.bubbles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    /* Пузыри будут лежать за текстом и карточками */
+    pointer-events: none;
+    /* Чтобы пузыри не мешали кликать по кнопкам сайта */
+    overflow: hidden;
+}
+
+/* Общий стиль для всех пузырьков */
+.bubble {
+    position: absolute;
+    bottom: -50px;
+    /* Изначально прячутся под экраном */
+    background: rgba(255, 255, 255, 0.1);
+    /* Очень нежный, полупрозрачный белый цвет */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* Легкий блик по краям */
+    border-radius: 50%;
+    /* Делаем их идеально круглыми */
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+    /* Внутреннее свечение */
+    animation: floatUp 12s linear infinite;
+    /* Запуск анимации движения вверх */
+}
+
+/* Главная анимация: движение снизу вверх с легким покачиванием в стороны */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        /* Пузырек плавно появляется, отрываясь ото дна */
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) translateX(50px);
+        /* Поднимается выше экрана */
+        opacity: 0;
+        /* Растворяется у поверхности */
+    }
+}
+
+/* Настраиваем каждый пузырек отдельно, чтобы они были разного размера и летели с разной скоростью */
+.bubble:nth-child(1) {
+    left: 10%;
+    width: 30px;
+    height: 30px;
+    animation-duration: 10s;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    left: 25%;
+    width: 15px;
+    height: 15px;
+    animation-duration: 14s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(3) {
+    left: 40%;
+    width: 45px;
+    height: 45px;
+    animation-duration: 18s;
+    animation-delay: 4s;
+}
+
+.bubble:nth-child(4) {
+    left: 55%;
+    width: 20px;
+    height: 20px;
+    animation-duration: 12s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(5) {
+    left: 70%;
+    width: 35px;
+    height: 35px;
+    animation-duration: 16s;
+    animation-delay: 5s;
+}
+
+.bubble:nth-child(6) {
+    left: 85%;
+    width: 12px;
+    height: 12px;
+    animation-duration: 11s;
+    animation-delay: 3s;
+}
+
+.bubble:nth-child(7) {
+    left: 95%;
+    width: 25px;
+    height: 25px;
+    animation-duration: 15s;
+    animation-delay: 7s;
+}
+
+.bubble:nth-child(8) {
+    left: 33%;
+    width: 40px;
+    height: 40px;
+    animation-duration: 20s;
+    animation-delay: 6s;
+}
+
+.bubble:nth-child(9) {
+    left: 65%;
+    width: 18px;
+    height: 18px;
+    animation-duration: 13s;
+    animation-delay: 8s;
+}
+
+.bubble:nth-child(10) {
+    left: 48%;
+    width: 28px;
+    height: 28px;
+    animation-duration: 17s;
+    animation-delay: 2.5s;
+}
+
+/* === СЕКРЕТНАЯ КНОПКА ТЕСТА === */
+#quiz-unlock-box {
+    margin-top: 50px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Изначально скрытое состояние */
+.quiz-box-hidden {
+    display: none !important;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* Класс, который мы добавим через JS для запуска анимации вылета */
+.quiz-box-visible {
+    display: flex !important;
+    animation: quizUnveil 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.quiz-congrats {
+    font-size: 1.2rem;
+    color: #5bc0be;
+    margin-bottom: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Сама прикольная кнопка */
+.quiz-start-btn {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #7209b7, #f72585);
+    /* Дерзкий фиолетово-розовый неоновый градиент */
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(247, 37, 133, 0.3);
+    transition: all 0.4s ease;
+    animation: quizPulse 2s infinite alternate;
+    /* Постоянное манящее пульсирование */
+}
+
+/* Перекрашивание при наведении курсора прямо на кнопку */
+.quiz-start-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 35px rgba(247, 37, 133, 0.8);
+    background: linear-gradient(135deg, #f72585, #7209b7);
+    /* Переворачиваем градиент */
+}
+
+/* Анимация эффектного вылета снизу вверх */
+@keyframes quizUnveil {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Анимация неонового пульсирования */
+@keyframes quizPulse {
+    0% {
+        box-shadow: 0 0 15px rgba(247, 37, 133, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 30px rgba(114, 9, 183, 0.8), 0 0 10px rgba(247, 37, 133, 0.5);
+        transform: scale(1.02);
+    }
+}

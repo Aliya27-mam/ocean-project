@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Средний уровень — Тест</title>
+    <link rel="stylesheet" href="quiz-style.css">
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        /* Дополнительные стили для формы тестов */
+        .quiz-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .test-q-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .test-q-box p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ffb703;
+            /* Желтый цвет для среднего уровня */
+        }
+
+        .radio-option {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #cfd8dc;
+        }
+
+        .radio-option input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background: #ffb703;
+            color: #02040a;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #ffffff;
+            box-shadow: 0 0 20px #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="quiz.html" class="back-link">← Назад к уровням</a>
+        <div class="logo">🟡 Средний уровень</div>
+    </header>
+
+    <main class="quiz-container">
+        <div class="question-box">
+            <h1 style="color: #ffb703; margin-bottom: 5px;">Погружаемся глубже!</h1>
+            <p style="color: #b0bec5; font-style: italic; font-weight: 300; margin-bottom: 20px;">«Вы готовы к
+                дальнейшему!»</p>
+
+            <form class="quiz-form" id="medium-form">
+                <!-- Вопрос 1 -->
+                <div class="test-q-box">
+                    <p>1. Какого размера глаза у гигантского кальмара Архитеутиса?</p>
+                    <label class="radio-option"><input type="radio" name="q1" value="0"> С теннисный мяч</label>
+                    <label class="radio-option"><input type="radio" name="q1" value="1"> С футбольный мяч или большую
+                        тарелку</label>
+                    <label class="radio-option"><input type="radio" name="q1" value="2"> Такие же, как у обычного
+                        человека</label>
+                </div>
+
+                <!-- Вопрос 2 -->
+                <div class="test-q-box">
+                    <p>2. По какому математическому закону закручена раковина Наутилуса?</p>
+                    <label class="radio-option"><input type="radio" name="q2" value="0"> Теорема Пифагора</label>
+                    <label class="radio-option"><input type="radio" name="q2" value="1"> Закон Золотого сечения</label>
+                    <label class="radio-option"><input type="radio" name="q2" value="2"> Теория вероятностей</label>
+                </div>
+
+                <!-- Вопрос 3 -->
+                <div class="test-q-box">
+                    <p>3. Кто у косаток всегда является самым главным в семье?</p>
+                    <label class="radio-option"><input type="radio" name="q3" value="0"> Самый сильный и крупный
+                        самец</label>
+                    <label class="radio-option"><input type="radio" name="q3" value="1"> Старейшая самка
+                        (матриарх)</label>
+                    <label class="radio-option"><input type="radio" name="q3" value="2"> Они вообще живут строго
+                        поодиночке</label>
+                </div>
+
+                <button type="button" onclick="checkAnswers()" class="submit-btn">Завершить тест и проверить результаты
+                    🔱</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function checkAnswers() {
+            const form = document.getElementById('medium-form');
+            let score = 0;
+
+            // Проверяем вопрос 1 (правильный ответ 1 — С футбольный мяч)
+            const q1 = form.querySelector('input[name="q1"]:checked');
+            if (q1 && q1.value === "1") score++;
+
+            // Проверяем вопрос 2 (правильный ответ 1 — Золотое сечение)
+            const q2 = form.querySelector('input[name="q2"]:checked');
+            if (q2 && q2.value === "1") score++;
+
+            // Проверяем вопрос 3 (правильный ответ 1 — Матриарх)
+            const q3 = form.querySelector('input[name="q3"]:checked');
+            if (q3 && q3.value === "1") score++;
+
+            // Условие победы (минимум 2 правильных ответа из 3)
+            if (score >= 2) {
+                alert("Отличный результат! Средний уровень пройден на " + score + " из 3 баллов. Сложный уровень теперь разблокирован!");
+                localStorage.setItem('quiz_medium_passed', 'true');
+
+                // Возвращаем игрока на карту уровней
+                window.location.href = "quiz.html";
+            } else {
+                alert("Глубина не взята... Вы правильно ответили только на " + score + " из 3 вопросов. Попробуйте еще раз внимательно перечитать карточки сумеречной зоны!");
+            }
+        }
+    </script>
+</body>
+
+</html>
